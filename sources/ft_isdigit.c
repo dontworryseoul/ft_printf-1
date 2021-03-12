@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 06:28:01 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/12 23:18:42 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/13 00:57:08 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return (0);
+		return (1);
 	else
 		return (0);
 }
