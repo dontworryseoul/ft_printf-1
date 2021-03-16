@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/13 01:55:33 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/15 17:28:39 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_printf(const char *input, ...)
 	int precision;
 	int flag_minus;
 	int flag_zero;
+	int star_arg;
 	char *char_arg;
 	va_list	ap;
 
@@ -43,7 +44,7 @@ int	ft_printf(const char *input, ...)
 			i++;
 			while (input[i] == '-' || input[i] == '0') // flag확인
 			{
-				if (input[i] == '-') 
+				if (input[i] == '-')
 				{
 					flag_minus = 1;
 				}
@@ -53,15 +54,31 @@ int	ft_printf(const char *input, ...)
 				}
 				i++;
 			}
+			if (input[i] == '*') // * 옵션 판단
+			{
+				min_width = va_arg(ap, int);
+				i++;
+			}
 			while (ft_isdigit(input[i]) == 1) // min_width
 			{
 				min_width = min_width * 10 + (input[i] - '0');
 				i++;
+				j = 1;
+				// while (j < min_width)
+				// {
+				// 	//ft_putchar(" ");
+				// 	j++;
+				// }
 			}
 			if (input[i] == '.') // precision
-			{ 
+			{
 				i++;
-				while (ft_isdigit(input[i]) == 1) 
+				if (input[i] == '*') // * 옵션 판단
+				{
+					precision = va_arg(ap, int);
+					i++;
+				}
+				while (ft_isdigit(input[i]) == 1)
 				{
 					precision = precision * 10 + (input[i] - '0');
 					i++;
@@ -88,16 +105,14 @@ int	ft_printf(const char *input, ...)
 		}
 	}
 	va_end(ap);
-	printf("%d\n",flag_minus);
-	printf("%d\n",flag_zero);
-	printf("%d\n",min_width);
-	printf("%d\n",precision);
 	return (char_count);
 }
 
 int	main()
 {
-	int n = ft_printf("aa%-30.120daa\n", 10);
-	printf("%d\n", n);
+	//int n = ft_printf("%5.7d\n", 9);
+	//길이: 원래숫자길이 > precision > min_width; 원래 숫자가 더 중요
+	// 원래숫자길이 < precision < min_width: 공백,0,원래숫자 프린트
+	printf("a%8.7d", 999999);
 	return (0);
 }
