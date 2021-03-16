@@ -17,6 +17,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct    s_flag
+{
+  int flag_minus;
+  int flag_zero;
+  int precision;
+  int min_width;
+  int char_count;
+}         t_flag;
+t_flag  g_flag;
+
 typedef struct		s_list
 {
 	void			*content;
