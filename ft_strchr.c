@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungyel <lsy2246@naver.com>               +#+  +:+       +#+        */
+/*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 20:19:23 by seungyel          #+#    #+#             */
-/*   Updated: 2020/10/21 20:42:56 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/12 21:00:24 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 char	*ft_strchr(char *str, int c)
 {

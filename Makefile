@@ -14,15 +14,15 @@
 NAME = libftprintf.a
 TEST = ft_printf.out
 SRCS = ft_printf.c \
-			sources/ft_putchar.c \
-			sources/ft_putnbr_fd.c \
-			sources/ft_putchar_fd.c \
-			sources/ft_strchr.c \
-			sources/ft_strdup.c \
-			sources/ft_strlen.c \
-			sources/ft_strlcpy.c \
-			sources/ft_itoa.c \
-			sources/ft_isdigit.c
+			ft_putchar.c \
+			ft_putnbr_fd.c \
+			ft_putchar_fd.c \
+			ft_strchr.c \
+			ft_strdup.c \
+			ft_strlen.c \
+			ft_strlcpy.c \
+			ft_itoa.c \
+			ft_isdigit.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -32,7 +32,7 @@ $(NAME):
 	gcc -c -Wall -Werror -Wextra $(SRCS)
 	ar rc $(NAME) *.o
 
-test: $(NAME)
+make: $(NAME)
 	@gcc -g -L. -lftprintf $(SRCS) -o $(TEST)
 
 clean:

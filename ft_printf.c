@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 #include <stdarg.h>
-#include "sources/ft_printf.h"
+#include "ft_printf.h"
 #include <stdio.h>
 
 int	ft_printf(const char *input, ...)
@@ -23,9 +23,9 @@ int	ft_printf(const char *input, ...)
 	int char_count;
 	int min_width;
 	int precision;
-	int flag_minus;
-	int flag_zero;
-	int star_arg;
+	//int flag_minus;
+	//int flag_zero;
+	//int star_arg;
 	char *char_arg;
 	va_list	ap;
 
@@ -33,8 +33,8 @@ int	ft_printf(const char *input, ...)
 	j = 0;
 	min_width = 0;
 	char_count = 0;
-	flag_minus = 0;
-	flag_zero = 0;
+	//flag_minus = 0;
+	//flag_zero = 0;
 	precision = 0;
 	va_start(ap, input);
 	while (input[i] != 0)
@@ -46,11 +46,11 @@ int	ft_printf(const char *input, ...)
 			{
 				if (input[i] == '-')
 				{
-					flag_minus = 1;
+					//flag_minus = 1;
 				}
 				else if (input[i] == '0')
 				{
-					flag_zero = 1;
+					//flag_zero = 1;
 				}
 				i++;
 			}
@@ -113,6 +113,7 @@ int	main()
 	//int n = ft_printf("%5.7d\n", 9);
 	//길이: 원래숫자길이 > precision > min_width; 원래 숫자가 더 중요
 	// 원래숫자길이 < precision < min_width: 공백,0,원래숫자 프린트
-	printf("a%8.7d", 999999);
+	ft_printf("a%8.7d\n", 999999);
+  ft_printf("%8d\n", 42);
 	return (0);
 }
