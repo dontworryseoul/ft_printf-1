@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:00:43 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/12 21:10:47 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/16 23:31:14 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct    s_flag
 {
   int flag_minus;
   int flag_zero;
+  int flag_precision;
   int precision;
   int min_width;
   int char_count;
