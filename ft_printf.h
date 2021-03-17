@@ -34,6 +34,10 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+void	ft_c_type(va_list ap);
+void	ft_s_type(va_list ap);
+void  ft_percent_type(void);
+
 void                ft_putchar(char c);
 void				*ft_memset(void *ptr, int vlaue, size_t num);
 void				ft_bzero(void *s, size_t n);

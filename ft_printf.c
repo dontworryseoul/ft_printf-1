@@ -34,8 +34,13 @@ int  ft_min_width(const char **format, va_list ap)
   min_width = 0;
 	if (**format == '*') // * 옵션 판단
 	{
-		min_width = va_arg(ap, int); // 해야할일: min_width가 음수일 때 -flag가 on
+		min_width = va_arg(ap, int);
     ++(*format);
+    if (min_width < 0) //음수일때
+    {
+      g_flag.flag_minus = 1;
+      min_width *= -1;
+    }
 	}
   while (ft_isdigit(**format) == 1)
 	{
@@ -59,7 +64,7 @@ int ft_precision(const char **format, va_list ap)
 		{
 			precision = va_arg(ap, int);
       		++(*format);
-		}
+    }
 		while (ft_isdigit(**format) == 1)
 		{
 			precision = precision * 10 + (**format - '0');
@@ -69,29 +74,12 @@ int ft_precision(const char **format, va_list ap)
 	return (precision);
 }
 
-void	ft_c_type(va_list ap) //c까지 출력이 된다.
+void  ft_p_type(va_list ap) // 16진수
 {
-  char type;
-
-  type = va_arg(ap, int);
-  if (g_flag.min_width == 0)
-    ft_putchar(type);
-  else
-  {
-	if (g_flag.flag_minus == 1)
-    {
-      ft_putchar(type);
-      while (--g_flag.min_width)
-        ft_putchar(' ');
-    }
-    else if (g_flag.flag_minus == 0)
-    {
-      while (--g_flag.min_width)
-        ft_putchar(' ');
-      	ft_putchar(type);
-    }
-  }
+  //min_width 만큼 출력.
+  
 }
+
 
 /*
 min_width를 비교 argument_len
@@ -106,63 +94,23 @@ if (precision > argument_len)
 		flag_minus가 있으면 1.argument_len출력 2. flag_minus-argument_len만큼 공백출력
 		flag_minus가 없으면 1.flag_minus-argument_len만큼 공백출력 후, 2. argument_len출력
 */
-void	ft_s_type(va_list ap)
-{
-	char *type;
-	int gap;
-	int argument_len;
-	
-	type = va_arg(ap, char*);
-	if (type == NULL)
-		type = "(null)";
-	argument_len = ft_strlen(type); //가변인자의 길이
-	if (g_flag.precision < 0)
-		g_flag.precision = argument_len; // precision의 값이 음수면 무시하기 위헤.
-	if (g_flag.precision < argument_len && g_flag.flag_precision == 1)
-		argument_len = g_flag.precision;
-	if (g_flag.min_width <= argument_len)
-	{
-		while (argument_len--)
-			ft_putchar(*type++);
-	}
-	else if (g_flag.min_width > argument_len)
-	{
-		gap = g_flag.min_width - argument_len;
-		if (g_flag.flag_minus == 1)
-		{
-			while (argument_len--)
-				ft_putchar(*type++);
-			while (gap--)
-				ft_putchar(' ');
-		}
-		else
-		{
-			while (gap--)
-				ft_putchar(' ');
-			while (argument_len--)
-				ft_putchar(*type++);
-		}
-	}
-}
 
 void  ft_type_check(const char **format, va_list ap)
 {
- // int, char*, char,,?->X, 
-
   // if (**format == 'd')
   // //ft_d_type(ap);
   // else if (**format == 'i')
   // else if (**format == 'u')
   // else if (**format == 'x')
   // else if (**format == 'X')
-  // else if (**format == 'p')
-  if (**format == 'c')
+  if (**format == 'p')
+    ft_p_type(ap);
+  else if (**format == 'c')
     ft_c_type(ap);
   else if (**format == 's')
-	ft_s_type(ap);
-  // else if (**format == '%')
-  // else
-  ++(*format);
+	  ft_s_type(ap);
+  else if (**format == '%')
+    ft_percent_type();
 }
 
 // if (*format == '%') //%%를 출력
@@ -230,11 +178,25 @@ int	main()
 	// ft_printf("|%c|\n", 'a');
 	// ft_printf("|%-c|\n", 'a');
 	// ft_printf("|%-5c|\n", '\0');
-	ft_printf("|%3.2s|\n", "abcde");
-	ft_printf("|%-s|\n", "abcde");
-	ft_printf("|%-3s|\n", "abcde");
-	ft_printf("|%7s|\n", "abcde");
-	//ft_printf("|%-7.*s|\n", -3,"abcde");
-	printf("answer : |%*.3s|\n", -8,"abcde");
+	// ft_printf("|%3.2|\n", "abcde");
+	// ft_printf("|%-s|\n", "abcde");
+	// ft_printf("|%-3s|\n", "abcde");
+	// ft_printf("|%7s|\n", "abcde");
+	// //ft_printf("|%-7.*s|\n", -3,"abcde");
+	// printf("answer : |%*.3s|\n", -8,"abcde");
+  ft_printf("|%.%|\n");
+	ft_printf("|%.0%|\n");
+	ft_printf("|%5.0%|\n");
+	ft_printf("|%5.%|\n");
+	ft_printf("|%*%|\n", 5);
+	ft_printf("|%*%|\n", -5);
+	ft_printf("|%.5%|\n");
+	ft_printf("|%-0%|\n");
+	ft_printf("|%-042%|\n");
+	ft_printf("|%042%|\n");
+	ft_printf("|%4.2%|\n");
+	ft_printf("|%2.4%|\n");
+	ft_printf("|%0.42%|\n");
+	ft_printf("|%.42%|\n");
 	return (0);
 }
