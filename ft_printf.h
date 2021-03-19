@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:00:43 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/16 23:31:14 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/18 22:06:59 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_c_type(va_list ap);
 void	ft_s_type(va_list ap);
 void  ft_percent_type(void);
 
-void                ft_putchar(char c);
+void        ft_putchar(char c);
 void				*ft_memset(void *ptr, int vlaue, size_t num);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);

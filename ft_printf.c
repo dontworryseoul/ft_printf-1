@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/17 00:04:44 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/18 22:35:19 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 void  ft_minus_zero_check(const char **format)
 {
-  g_flag.flag_zero = 0;
-  g_flag.flag_minus = 0;
-  while (**format == '-' || **format == '0') // flag확인
+	g_flag.flag_zero = 0;
+	g_flag.flag_minus = 0;
+	while (**format == '-' || **format == '0') // flag확인
 	{
-    if (**format == '-')
+	if (**format == '-')
 			g_flag.flag_minus = 1;
 		else if (**format == '0')
 			g_flag.flag_zero = 1;
@@ -29,17 +29,17 @@ void  ft_minus_zero_check(const char **format)
 
 int  ft_min_width(const char **format, va_list ap)
 {
-  int min_width;
+	int min_width;
 
-  min_width = 0;
+	min_width = 0;
 	if (**format == '*') // * 옵션 판단
 	{
 		min_width = va_arg(ap, int);
-    ++(*format);
-    if (min_width < 0) //음수일때
+	++(*format);
+	if (min_width < 0) //음수일때
     {
-      g_flag.flag_minus = 1;
-      min_width *= -1;
+    	g_flag.flag_minus = 1;
+    	min_width *= -1;
     }
 	}
   while (ft_isdigit(**format) == 1)
@@ -73,33 +73,96 @@ int ft_precision(const char **format, va_list ap)
 	}
 	return (precision);
 }
+	//n이랑 precision이랑 비교
+	//if precision < n
+	//	precision - n만큼'0'출력, 숫자출력
+	//if n < precision
+	//	숫자출력
 
-  //어떤 값이 들어온다. int char
-//va_arg()를 받을 땐, 16진수 12개를 커버할 수 있는 범위의 자료형.
-  //-> long long
-  //받아온 수를 16을 나누고 나머지를 출력
+	// precision이랑 n 중에 큰값이랑 width 비교
+	//음수면 -출력.
+	//if width 더 크면 ' '출력
+	//else 끝.
+void  ft_d_type(va_list ap)
+{
+	int gap;
+	int gap_1;
+	int max;
+	int num_len;
+	int num;
+	char *char_num;
+
+	num = va_arg(ap, int);
+	char_num = ft_itoa(num);
+	num_len = ft_strlen(char_num);
+
+	if (g_flag.precision < num_len)
+	{
+		gap = num_len;
+		if (g_flag.min_width > num_len)
+		{
+			gap_1 = g_flag.min_width - gap;
+			while (gap_1--)
+				ft_putchar(' ');
+		}
+		while (num_len--)
+			ft_putchar(*char_num++);
+		while (gap--)
+			ft_putchar('0');
+	}
+	else if (num_len < g_flag.precision)
+	{
+		gap = g_flag.precision - num_len;
+		if (g_flag.precision < g_flag.min_width)
+		{
+			gap_1 = g_flag.min_width - g_flag.precision;
+			while (gap_1--)
+				ft_putchar(' ');
+		}
+		while (gap--)
+			ft_putchar('0');
+		while (num_len--)
+			ft_putchar(*char_num++);
+	}
+}
+
 void  ft_p_type(va_list ap) // 16진수로 된 주소표기
 {
   int i;
+  int j;
   int len;
-  char out[13];
+  int index;
+  char out[15];
+  char out_reverse[13];
   char *numbers;
   long long num;
 //long long타입이여야하는데
-//https://en.cppreference.com/w/cpp/utility/variadic/va_arg    // 참고 링크 
+//https://en.cppreference.com/w/cpp/utility/variadic/va_arg    // 참고 링크
 // one type is pointer to void and the other is a pointer to a character type (char, signed char, or unsigned char).//한 유형은 void에 대한 포인터이고 다른 유형은 문자 유형(char, signed char 또는 서명되지 않은 문자)에 대한 포인터입니다.,,
   i = 0;
+  j = 0;
   numbers = "0123456789abcdef";
   num = (long long)va_arg(ap, void*);//long long형태로 된 주소값.
-  out[i]='\0';
-  while (num >= 16)
-  {
-    len = num % 16;
-    out[--i] = numbers[len];
-    num = num / 16;
-  }
-  
-  printf("%s",out); 
+	while (num >= 16)
+	{
+		len = num % 16;
+		out_reverse[i] = numbers[len];
+		i++;
+		num = num / 16;
+	}
+	out_reverse[i] = numbers[num];
+	index = i;
+	out[0] = '0';
+	out[1] = 'x';
+	while (j+2 <= index+2)
+	{
+		out[j+2] = out_reverse[i];
+		i--;
+		j++;
+	}
+	out[j+2] = '\0';
+	printf("%s",out);
+
   //금요일까지 숙제: 거꾸로 프린트 할 수 있도록(p 다듬기).
   //s의 주소값. putchar를 변경하는 방법도 있음.
   //u를 어떻게 할지 생각해보기.
@@ -116,7 +179,7 @@ min_width를 비교 argument_len
 if (precision < argument_len) precision.다음에 나오는 숫자들
 	argument_len = precision에 넣는다.
 if (precision > argument_len)
-	
+
 	if (min_width < argument_len)
 		argument_len을 프린트한다.
 	if (min_width > argument_len)
@@ -126,13 +189,14 @@ if (precision > argument_len)
 
 void  ft_type_check(const char **format, va_list ap)
 {
-  // if (**format == 'd')
-  // //ft_d_type(ap);
+	if (**format == 'd')
+		ft_d_type(ap);
   // else if (**format == 'i')
-  // else if (**format == 'u')
+//   if (**format == 'u')
+// 	ft_u_type(ap);
   // else if (**format == 'x')
   // else if (**format == 'X')
-  if (**format == 'p')
+	else if (**format == 'p')
     ft_p_type(ap);
   else if (**format == 'c')
     ft_c_type(ap);
@@ -214,7 +278,7 @@ int	main()
 	// ft_printf("|%7s|\n", "abcde");
 	// //ft_printf("|%-7.*s|\n", -3,"abcde");
 	// printf("answer : |%*.3s|\n", -8,"abcde");
-  // ft_printf("|%.%|\n");
+	// ft_printf("|%.%|\n");
 	// ft_printf("|%.0%|\n");
 	// ft_printf("|%5.0%|\n");
 	// ft_printf("|%5.%|\n");
@@ -228,9 +292,13 @@ int	main()
 	// ft_printf("|%2.4%|\n");
 	// ft_printf("|%0.42%|\n");
 	// ft_printf("|%.42%|\n");
-  int a = 10;
-  ft_printf("%p", &a);
-  printf("\n");
-  printf("%p\n",&a);
+	//	printf("real : %p\n",&a);
+	//	ft_printf("make : %p", &a);
+	// ft_printf("%*d\n", 7, 12345);
+	printf("%7d\n", -12345);
+	ft_printf("%7d\n", -12345);
+		printf("%7d\n", 12345);
+	ft_printf("%7d\n", 12345);
+	// ft_printf("%-d", 12345);
 	return (0);
 }
