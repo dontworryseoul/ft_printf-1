@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:00:43 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 02:11:35 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/20 04:03:09 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ typedef struct		s_list
 void	ft_c_type(va_list ap);
 void	ft_s_type(va_list ap);
 void  ft_percent_type(void);
-int		ft_printf(const char *format, ...);
-void        ft_putchar(char c);
+int					ft_printf(const char *format, ...);
+char				*ft_itoa_hex(long long n, char type);
+void				ft_putchar(char c);
 void				*ft_memset(void *ptr, int vlaue, size_t num);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
@@ -71,7 +72,7 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(char const *s1, char const *set);
-char				*ft_itoa(int n);
+char				*ft_itoa(long long n);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**ft_split(char const *s, char c);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));

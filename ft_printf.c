@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 02:24:41 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/20 04:10:37 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ struct s_d_vars
 	int zero_remains;
 	int num_len;
 	long long num;
+	unsigned int u_num;
+	unsigned int x_num;
 	int is_negative;
 	char symbol_of_padding;
 	char *str_of_num;
@@ -123,7 +125,7 @@ void	d_minus_flag(t_d_vars var)
 	while ((var.num_len)--)
 		ft_putchar(*(var.str_of_num)++);
 	while (padding_size-- > 0)
-			ft_putchar(var.symbol_of_padding);
+		ft_putchar(var.symbol_of_padding);
 }
 
 void  ft_d_type(va_list ap)
@@ -143,11 +145,124 @@ void  ft_d_type(va_list ap)
 		var.is_negative = 1;
 	}
 	var.str_of_num = ft_itoa(var.num);
+	if (!var.str_of_num)
+		return ;
 	var.num_len = ft_strlen(var.str_of_num);
 	if (g_flag.flag_minus == 0)
 		d_no_minus_flag(var);
 	else
 		d_minus_flag(var);
+	free(var.str_of_num);
+}
+
+void	u_no_minus_flag(t_d_vars var)
+{
+	int padding_size;
+
+	if (g_flag.precision < var.num_len)
+		padding_size = g_flag.min_width - var.num_len;
+	else
+		padding_size = g_flag.min_width - g_flag.precision;
+	while (padding_size-- > 0)
+			ft_putchar(var.symbol_of_padding);
+	var.zero_remains = g_flag.precision - var.num_len;
+	while (var.zero_remains-- > 0)
+		ft_putchar('0');
+	while ((var.num_len)--)
+		ft_putchar(*(var.str_of_num)++);
+}
+
+void	u_minus_flag(t_d_vars var)
+{
+	int padding_size;
+
+	if (g_flag.precision < var.num_len)
+		padding_size = g_flag.min_width - var.num_len;
+	else
+		padding_size = g_flag.min_width - g_flag.precision;
+	var.zero_remains = g_flag.precision - var.num_len;
+	while (var.zero_remains-- > 0)
+		ft_putchar('0');
+	while ((var.num_len)--)
+		ft_putchar(*(var.str_of_num)++);
+	while (padding_size-- > 0)
+		ft_putchar(var.symbol_of_padding);
+}
+
+void  ft_u_type(va_list ap)
+{
+	t_d_vars var;
+
+	var.zero_remains = 0;
+	var.u_num = va_arg(ap, int);
+	if (g_flag.flag_zero)
+		var.symbol_of_padding = '0';
+	else
+		var.symbol_of_padding = ' ';
+	var.str_of_num = ft_itoa(var.u_num);
+	if (!var.str_of_num)
+		return ;
+	var.num_len = ft_strlen(var.str_of_num);
+	if (g_flag.flag_minus == 0)
+		u_no_minus_flag(var);
+	else
+		u_minus_flag(var);
+	free(var.str_of_num);
+}
+
+void	x_no_minus_flag(t_d_vars var)
+{
+	int padding_size;
+
+	if (g_flag.precision < var.num_len)
+		padding_size = g_flag.min_width - var.num_len;
+	else
+		padding_size = g_flag.min_width - g_flag.precision;
+	while (padding_size-- > 0)
+			ft_putchar(var.symbol_of_padding);
+	var.zero_remains = g_flag.precision - var.num_len;
+	while (var.zero_remains-- > 0)
+		ft_putchar('0');
+	while ((var.num_len)--)
+		ft_putchar(*(var.str_of_num)++);
+}
+
+void	x_minus_flag(t_d_vars var)
+{
+	int padding_size;
+
+	if (g_flag.precision < var.num_len)
+		padding_size = g_flag.min_width - var.num_len;
+	else
+		padding_size = g_flag.min_width - g_flag.precision;
+	var.zero_remains = g_flag.precision - var.num_len;
+	while (var.zero_remains-- > 0)
+		ft_putchar('0');
+	while ((var.num_len)--)
+		ft_putchar(*(var.str_of_num)++);
+	while (padding_size-- > 0)
+		ft_putchar(var.symbol_of_padding);
+}
+
+void  ft_x_type(va_list ap, char type)
+{
+	t_d_vars var;
+
+	var.zero_remains = 0;
+	var.x_num = va_arg(ap, int);
+	if (g_flag.flag_zero)
+		var.symbol_of_padding = '0';
+	else
+		var.symbol_of_padding = ' ';
+	var.str_of_num = ft_itoa_hex(var.x_num, type);
+	if (!var.str_of_num)
+		return ;
+	var.num_len = ft_strlen(var.str_of_num);
+	if (g_flag.flag_minus == 0)
+		u_no_minus_flag(var);
+	else
+		u_minus_flag(var);
+	free(var.str_of_num);
 }
 
 void	ft_p_type(va_list ap, int i, int j, int index)
@@ -184,13 +299,13 @@ void	ft_type_check(const char **format, va_list ap)
 	if (**format == 'd')
 		ft_d_type(ap);
 	else if (**format == 'i')
-		return ;
+		ft_d_type(ap);
 	else if (**format == 'u')
-		return ;
+		ft_u_type(ap);
 	else if (**format == 'x')
-		return ;
+		ft_x_type(ap, 'x');
 	else if (**format == 'X')
-		return ;
+		ft_x_type(ap, 'X');
 	else if (**format == 'p')
 		ft_p_type(ap, 0, 0, 0);
 	else if (**format == 'c')
