@@ -6,7 +6,7 @@
 #    By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/08 21:21:01 by seungyel          #+#    #+#              #
-#    Updated: 2021/03/12 23:34:47 by seungyel         ###   ########.fr        #
+#    Updated: 2021/03/20 02:27:26 by seungyel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,3 +42,7 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
+
+test:
+	@gcc -Wall -Werror -Wextra *.c
+	@./a.out

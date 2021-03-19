@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 20:00:43 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/18 22:06:59 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/20 02:11:35 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct		s_list
 void	ft_c_type(va_list ap);
 void	ft_s_type(va_list ap);
 void  ft_percent_type(void);
-
+int		ft_printf(const char *format, ...);
 void        ft_putchar(char c);
 void				*ft_memset(void *ptr, int vlaue, size_t num);
 void				ft_bzero(void *s, size_t n);

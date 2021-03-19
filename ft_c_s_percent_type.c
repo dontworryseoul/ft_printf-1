@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-void	ft_c_type(va_list ap) 
+void	ft_c_type(va_list ap)
 {
   char type;
 
@@ -29,7 +29,7 @@ void	ft_s_type(va_list ap)
 	char *type;
 	int gap;
 	int argument_len;
-	
+
 	type = va_arg(ap, char*);
 	if (type == NULL)
 		type = "(null)";
@@ -78,11 +78,8 @@ void	ft_s_type(va_list ap)
   //min_width의 값이 있다면
 void  ft_percent_type(void)
 {
-  char type;
   int count;
-  int zero_space;
 
-  count = 0;
   count = g_flag.min_width;
   if (g_flag.flag_minus == 1) // flag가 -일때
   {
@@ -97,7 +94,7 @@ void  ft_percent_type(void)
     ft_putchar('%');
   }
   else if (g_flag.flag_zero == 1) // flag가 0일때,
-  { 
+  {
     while (count-- > 0)
       ft_putchar('0');
     ft_putchar('%');
