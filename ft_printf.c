@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 20:28:26 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/20 21:17:22 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,13 @@ void	u_minus_flag(t_d_vars var)
 	while (var.zero_remains-- > 0)
 		ft_putchar('0');
 	while ((var.num_len)--)
+	{
+		//오늘의 숙제: 여기 조건 설정. -> u고쳐보기.
+		if (g_flag.flag_precision == 1 && g_flag.precision == 0 && )
+			if (*var.str_of_num == 0)
+				*var.str_of_num = ' ';
 		ft_putchar(*(var.str_of_num)++);
+	}
 	while (padding_size-- > 0)
 		ft_putchar(var.symbol_of_padding);
 }
@@ -194,7 +200,7 @@ void  ft_u_type(va_list ap)
 	t_d_vars var;
 
 	var.zero_remains = 0;
-	var.u_num = va_arg(ap, int);
+	var.u_num = va_arg(ap, unsigned int);
 	if (g_flag.flag_zero)
 		var.symbol_of_padding = '0';
 	else
@@ -265,10 +271,6 @@ void  ft_x_type(va_list ap, char type)
 	free(var.str_of_num);
 }
 
-//뒤의 공백이 출력이 안됨
-//precision이 0인 경우, 0이 나오면 안되는데 출력됨
-//->precisiond이 0일 때,
-//precision이 0
 void	ft_p_type(va_list ap, int i, int j, int index)
 {
 	int			gap;
@@ -289,18 +291,8 @@ void	ft_p_type(va_list ap, int i, int j, int index)
 	out[0] = '0';
 	out[1] = 'x';
 
-	j = 0;
 	if (g_flag.flag_precision == 1 && g_flag.precision == 0 && num == 0)
-	{
 		out[2] = '\0';
-		while (out[j])
-			ft_putchar(out[j++]);
-	}
-	else if (g_flag.flag_precision == 0 && g_flag.precision == 0 && num == 0)
-	{
-		while (out[j])
-			ft_putchar(out[j++]);
-	}
 	else
 	{
 		while (j + 2 <= index + 2)
@@ -311,6 +303,7 @@ void	ft_p_type(va_list ap, int i, int j, int index)
 	}
 	out[j + 2] = '\0';
 	gap = g_flag.min_width - j - 2;
+	j = 0;
 	if (g_flag.flag_minus == 1)
 	{
 		while (out[j])
@@ -318,7 +311,7 @@ void	ft_p_type(va_list ap, int i, int j, int index)
 		while (gap-- > 0)
 			ft_putchar(' ');
 	}
-	else //(g_flag.flag_minus == 1)
+	else
 	{
 		while (gap-- > 0)
 			ft_putchar(' ');

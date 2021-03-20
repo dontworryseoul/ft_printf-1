@@ -4,14 +4,12 @@
 
 int main()
 {
-	char *p;
+	unsigned int u;
+	u = 0;
 
-	// p = "1230";
-	p = 0;
-
-	ft_printf("|%-16.p|\n", p);
-	printf("|%-16.p|\n", p);
-	ft_printf("|%-16p|\n", p);
-	printf("|%-16p|\n", p);
+	ft_printf("-->|%-4.*u|<--\n", 0, u);
+	printf("-->|%-4.*u|<--\n", 0, u);
+	ft_printf("-->|%-4.*u|<--\n", 0, u);
+	printf("-->|%-4.*u|<--\n", 0, u);
 	return (0);
 }
