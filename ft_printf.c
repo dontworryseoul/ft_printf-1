@@ -6,7 +6,7 @@
 /*   By: seungyel <seungyel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:52:41 by seungyel          #+#    #+#             */
-/*   Updated: 2021/03/20 04:10:37 by seungyel         ###   ########.fr       */
+/*   Updated: 2021/03/20 20:28:26 by seungyel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,9 +265,14 @@ void  ft_x_type(va_list ap, char type)
 	free(var.str_of_num);
 }
 
+//뒤의 공백이 출력이 안됨
+//precision이 0인 경우, 0이 나오면 안되는데 출력됨
+//->precisiond이 0일 때,
+//precision이 0
 void	ft_p_type(va_list ap, int i, int j, int index)
 {
-	char		out[15];
+	int			gap;
+	char		out[20];
 	char		out_reverse[13];
 	char		*numbers;
 	long long	num;
@@ -283,15 +288,43 @@ void	ft_p_type(va_list ap, int i, int j, int index)
 	index = i;
 	out[0] = '0';
 	out[1] = 'x';
-	while (j + 2 <= index + 2)
+
+	j = 0;
+	if (g_flag.flag_precision == 1 && g_flag.precision == 0 && num == 0)
 	{
-		out[j + 2] = out_reverse[i--];
-		j++;
+		out[2] = '\0';
+		while (out[j])
+			ft_putchar(out[j++]);
+	}
+	else if (g_flag.flag_precision == 0 && g_flag.precision == 0 && num == 0)
+	{
+		while (out[j])
+			ft_putchar(out[j++]);
+	}
+	else
+	{
+		while (j + 2 <= index + 2)
+		{
+			out[j + 2] = out_reverse[i--];
+			j++;
+		}
 	}
 	out[j + 2] = '\0';
-	j = 0;
-	while (out[j])
-		ft_putchar(out[j++]);
+	gap = g_flag.min_width - j - 2;
+	if (g_flag.flag_minus == 1)
+	{
+		while (out[j])
+			ft_putchar(out[j++]);
+		while (gap-- > 0)
+			ft_putchar(' ');
+	}
+	else //(g_flag.flag_minus == 1)
+	{
+		while (gap-- > 0)
+			ft_putchar(' ');
+		while (out[j])
+			ft_putchar(out[j++]);
+	}
 }
 
 void	ft_type_check(const char **format, va_list ap)

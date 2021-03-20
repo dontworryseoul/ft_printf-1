@@ -1,8 +1,0 @@
-d타입
-int n = ft_printf("%5.7d\n", 9);
-길이: 원래숫자길이 > precision > min_width; 원래 숫자가 더 중요
-원래숫자길이 < precision < min_width: 공백,0,원래숫자 프린트
-
-
-전체 흐름
-파싱

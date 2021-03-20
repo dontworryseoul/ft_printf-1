@@ -33,9 +33,9 @@ void	ft_s_type(va_list ap)
 	type = va_arg(ap, char*);
 	if (type == NULL)
 		type = "(null)";
-	argument_len = ft_strlen(type); //가변인자의 길이
-	// if (g_flag.precision < 0)
-	// 	g_flag.precision = argument_len; // precision의 값이 음수면 무시하기 위해.
+	argument_len = ft_strlen(type);
+	if (g_flag.precision < 0)
+		g_flag.precision = argument_len;
 	if (g_flag.precision < argument_len && g_flag.flag_precision == 1)
 		argument_len = g_flag.precision;
 	if (g_flag.min_width <= argument_len)
@@ -63,24 +63,12 @@ void	ft_s_type(va_list ap)
 	}
 }
 
-//precision의 값은 무시.
-  // flag_minus가 있다면
-  //  %출력후 공백
-    // flag_minus가 없으면
-    //   공백 출력후 %
-    // flag_zero가 있으면 (첫 숫자가 0이면?)
-    //   0출력후 %
-    // flag_zero가 없으면
-    // .은 무시 그냥 %출력
-    // 다른 문자열도 무시
-  //min_width의 값이 없으면
-    //% 의 값만 나온다.
-  //min_width의 값이 있다면
 void  ft_percent_type(void)
 {
   int count;
 
   count = g_flag.min_width;
+  count--;
   if (g_flag.flag_minus == 1) // flag가 -일때
   {
     ft_putchar('%');
